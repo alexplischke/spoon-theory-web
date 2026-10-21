@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spoon Theory</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A calm focus timer for iPhone and Mac, designed with ADHD and autistic brains in mind. One-time purchase, no subscription.">
+<meta property="og:title" content="Spoon Theory">
+<meta property="og:description" content="A calm focus timer for iPhone and Mac. Pay once. No subscription. No in-app purchases.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://spoontheory.app/">
+<meta property="og:image" content="https://spoontheory.app/assets/mac-history.webp">
+<meta name="theme-color" content="#0E1014">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@300;400;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&display=swap">
+<style>
+/* Layout: alternating screenshot rows on a quiet ground; the one bold move is the hero's oversized thin timer numerals. */
+:root {
+  --bg: #F4F5F7;
+  --surface: #FFFFFF;
+  --fg: #13161C;
+  --muted: #535B68;
+  --line: #DADDE3;
+  --accent: #0A5FCC;
+  --accent-fg: #FFFFFF;
+  --digits: #13161C;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", -apple-system, system-ui, sans-serif;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
+  --step-3: clamp(2.3rem, 1.4rem + 3.6vw, 4.1rem);
+  --gutter: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1014; --surface: #171A21; --fg: #ECEEF3; --muted: #A2A9B5; --line: #272B34;
+    --accent: #4A9BFF; --accent-fg: #06101F; --digits: #ECEEF3; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1014; --surface: #171A21; --fg: #ECEEF3; --muted: #A2A9B5; --line: #272B34;
+  --accent: #4A9BFF; --accent-fg: #06101F; --digits: #ECEEF3; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter-r);
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, .cta:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.wrap { max-width: 1120px; margin: 0 auto; }
+.eyebrow { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.lede { color: var(--muted); font-size: var(--step-1); max-width: 34rem; }
+
+/* Header */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+.mark { font-family: var(--display); font-weight: 700; font-size: 1.2rem; color: var(--fg); text-decoration: none; letter-spacing: -0.01em; }
+.top a.small { font-weight: 600; text-decoration: none; }
+
+.terms { color: var(--muted); font-size: 0.95rem; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 48px; align-items: center; padding-block: 40px 72px; }
+.hero-copy { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+.hero h1 { font-size: var(--step-3); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.stage { position: relative; min-width: 0; padding-bottom: 40px; }
+.stage .mac { width: 86%; }
+.stage .phone { position: absolute; right: 0; bottom: 0; width: 30%; }
+
+/* Phone frame */
+.phone { border-radius: 14% / 6.5%; padding: 2.2%; background: #000; border: 1px solid var(--line); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.45); }
+.phone img { border-radius: 12% / 5.6%; }
+
+/* Rhythm strip: the actual session sequence */
+.cycle { border-block: 1px solid var(--line); padding-block: 48px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 32px; align-items: center; }
+.cycle h2 { font-size: var(--step-2); }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.steps li { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 6px; }
+.steps .phase { font-size: 0.9rem; color: var(--muted); }
+.steps .num { font-family: var(--body); font-weight: 300; font-size: 2.4rem; line-height: 1; font-variant-numeric: tabular-nums; color: var(--digits); }
+.steps .num.you { color: var(--accent); font-weight: 600; font-size: 1.6rem; line-height: 1.5; }
+.steps p { color: var(--muted); font-size: 0.95rem; }
+
+/* Feature rows */
+.feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 56px; align-items: center; padding-block: 88px 0; }
+.feature.flip .feature-copy { order: 2; }
+.feature-copy { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.feature h2 { font-size: var(--step-2); }
+.feature p { color: var(--muted); max-width: 32rem; }
+.feature figure { margin: 0; min-width: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 4px 0 0; list-style: none; }
+.chips li { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 14px; font-size: 0.95rem; }
+.solo-phone { width: min(300px, 70%); margin: 0 auto; }
+.pair { position: relative; padding-bottom: 32px; }
+.pair .mac { width: 92%; }
+.pair .phone { position: absolute; left: 0; bottom: 0; width: 26%; }
+
+/* Principles */
+.principles { padding-block: 104px 0; display: flex; flex-direction: column; gap: 32px; }
+.principles h2 { font-size: var(--step-2); }
+.grid4 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.grid4 > div { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.grid4 h3 { font-size: 1.25rem; letter-spacing: -0.01em; }
+.grid4 p { color: var(--muted); }
+
+/* Name */
+.name { padding-block: 104px 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 32px; }
+.name h2 { font-size: var(--step-2); }
+.name .text { display: flex; flex-direction: column; gap: 16px; max-width: 40rem; min-width: 0; }
+.name .text p { color: var(--muted); }
+
+/* Closing */
+.closing { margin-top: 104px; padding-block: 64px; border-top: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; }
+.closing h2 { font-size: var(--step-2); }
+footer { padding-block: 24px 40px; color: var(--muted); font-size: 0.95rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); }
+footer nav { display: flex; gap: 20px; }
+footer .made { flex-basis: 100%; color: var(--fg); }
+
+@media (max-width: 860px) {
+  .hero, .feature, .cycle, .name { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .feature.flip .feature-copy { order: 0; }
+  .feature { padding-block: 64px 0; }
+  .steps { grid-template-columns: minmax(0, 1fr); }
+  .grid4 { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cta { transition: transform 0.15s ease; }
+  .cta:hover { transform: translateY(-1px); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <a class="mark" href="./">Spoon Theory</a>
+  <a class="small" href="https://apps.apple.com/app/idXXXXXXXXXX">Get the app</a>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow">For iPhone and Mac</p>
+      <h1 id="hero-title">A focus timer that respects your energy.</h1>
+      <p class="lede">Spoon Theory is a calm session timer built with ADHD and autistic brains in mind. Pick a session, press start, and let everything else get quiet.</p>
+      <div class="actions">
+        <a class="cta" href="https://apps.apple.com/app/idXXXXXXXXXX">
+            <img src="assets/App_Store_Badge.svg" loading="lazy" alt="Download on the App Store.">
+        </a>
+        <p class="terms">One-time purchase. No subscription.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <img class="mac" src="assets/mac-timer.webp" width="888" height="952" alt="Spoon Theory on Mac: a small window showing Focus with 14:53 remaining and a pause button.">
+      <div class="phone">
+        <img src="assets/iphone-timer.webp" width="1206" height="2622" alt="Spoon Theory on iPhone: the Kickstart preset in Focus with 14:55 remaining.">
+      </div>
+    </div>
+  </section>
+
+  <section class="cycle" aria-labelledby="cycle-title">
+    <h2 id="cycle-title">One session, at your pace.</h2>
+    <ol class="steps">
+      <li><span class="phase">Focus</span><span class="num">45:00</span><p>Work on one thing while the timer counts down.</p></li>
+      <li><span class="phase">Rest</span><span class="num">5:00</span><p>Step away. The break is part of the session.</p></li>
+      <li><span class="phase">Next</span><span class="num you">You decide</span><p>The next phase starts when you are ready, never mid-thought.</p></li>
+    </ol>
+  </section>
+
+  <section class="feature" aria-labelledby="f1">
+    <div class="feature-copy">
+      <p class="eyebrow">Live Activity</p>
+      <h2 id="f1">Check the time left without unlocking.</h2>
+      <p>Your session stays on the Lock Screen, so a quick glance answers "how long until a break?" without pulling you into your phone.</p>
+    </div>
+    <figure>
+      <div class="phone solo-phone">
+        <img src="assets/iphone-live-activity.webp" width="1206" height="2622" loading="lazy" alt="iPhone Lock Screen with a Spoon Theory Live Activity showing Focus 14:38.">
+      </div>
+    </figure>
+  </section>
+
+  <section class="feature flip" aria-labelledby="f2">
+    <div class="feature-copy">
+      <p class="eyebrow">Presets</p>
+      <h2 id="f2">Sessions sized to the day you are having.</h2>
+      <p>Some days have room for a long stretch. Some days five minutes is a win. Save a preset for each and start the right one in a tap.</p>
+    </div>
+    <figure>
+      <img src="assets/mac-presets.webp" width="1324" height="1002" loading="lazy" alt="Spoon Theory presets on Mac.">
+    </figure>
+  </section>
+
+  <section class="feature" aria-labelledby="f3">
+    <div class="feature-copy">
+      <p class="eyebrow">History</p>
+      <h2 id="f3">See where your focus went.</h2>
+      <p>A week at a glance on iPhone and Mac. Notice your rhythms, like which days run long and which need a lighter plan.</p>
+    </div>
+    <figure class="pair">
+      <img class="mac" src="assets/mac-history.webp" width="2036" height="1206" loading="lazy" alt="Spoon Theory history on Mac: a weekly bar chart of focus hours, 38 hours 50 minutes in total.">
+      <div class="phone">
+        <img src="assets/iphone-history.webp" width="1206" height="2622" loading="lazy" alt="Spoon Theory history on iPhone: a weekly bar chart of focus hours.">
+      </div>
+    </figure>
+  </section>
+
+  <section class="principles" aria-labelledby="p-title">
+    <h2 id="p-title">Built to stay out of your way.</h2>
+    <div class="grid4">
+      <div><h3>Pay once</h3><p>Buy it one time and keep it. No subscription, no trial that runs out.</p></div>
+      <div><h3>No account</h3><p>There is nothing to sign up for. Open the app and start a session.</p></div>
+      <div><h3>Your data, your iCloud</h3><p>Sync session history and presets between your devices through your own iCloud account.</p></div>
+      <div><h3>Quiet by design</h3><p>No streaks, scores or nagging. Just the timer and what you choose to do with it.</p></div>
+    </div>
+  </section>
+
+  <section class="name" aria-labelledby="n-title">
+    <h2 id="n-title">Why "Spoon Theory"?</h2>
+    <div class="text">
+      <p>Spoon theory was written by Christine Miserandino to describe living with limited energy. Each task costs some spoons, and when they are gone, they are gone for the day.</p>
+      <p>The app borrows that idea. Focus is a resource to spend with care, and resting is part of the plan, not a failure of it.</p>
+    </div>
+  </section>
+
+  <section class="closing" aria-labelledby="c-title">
+    <h2 id="c-title">Spend your spoons on what matters.</h2>
+    <a class="cta" href="https://apps.apple.com/app/idXXXXXXXXXX">
+      <img src="assets/App_Store_Badge.svg" loading="lazy" alt="Download on the App Store.">
+    </a>
+    <p class="terms">For iPhone and Mac. One-time purchase.</p>
+  </section>
+</main>
+
+<footer>
+  <p class="made">Made with ❤️ in Santa Cruz, California.</p>
+  <span>© 2026 Alex Plischke</span>
+  <nav aria-label="Footer">
+    <a href="/privacy">Privacy</a>
+  </nav>
+</footer>
+
+</div>
+</body>
+</html>
